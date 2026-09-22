@@ -2,8 +2,8 @@
 
 :root {
   color-scheme: dark;
-  --bg: #050e1b;
-  --bg-deep: #030a14;
+  --bg: #020817;
+  --bg-deep: #010611;
   --surface: #0d1b2d;
   --surface-hover: #13243a;
   --border: rgba(143, 166, 197, 0.16);
@@ -11,7 +11,8 @@
   --muted: #aebbd0;
   --accent: #4d72ff;
   --accent-light: #6690ff;
-  --header: rgba(4, 13, 25, 0.86);
+  --hero-blend: #0d1b35;
+  --header: rgba(2, 8, 23, 0.88);
   --shadow: rgba(0, 0, 0, 0.28);
 }
 
@@ -26,6 +27,7 @@
   --muted: #4f5e73;
   --accent: #345cf2;
   --accent-light: #4b71ff;
+  --hero-blend: #f6f8fc;
   --header: rgba(246, 248, 252, 0.9);
   --shadow: rgba(35, 52, 84, 0.11);
 }
@@ -43,13 +45,29 @@ html {
 body {
   margin: 0;
   background:
-    radial-gradient(circle at 70% 8%, rgba(45, 80, 180, 0.12), transparent 32rem),
-    var(--bg);
+    radial-gradient(ellipse 54rem 34rem at 8% 14%, rgba(37, 78, 180, 0.22), transparent 72%),
+    radial-gradient(ellipse 42rem 28rem at 94% 78%, rgba(28, 63, 153, 0.16), transparent 70%),
+    linear-gradient(145deg, #020817 0%, #07152d 48%, #020817 100%);
+  background-attachment: fixed;
+  background-position: 0% 0%, 100% 100%, center;
+  background-size: 125% 125%, 125% 125%, cover;
+  animation: ambient-shift 22s ease-in-out infinite alternate;
   color: var(--text);
   font-family: Inter, "Segoe UI", Arial, sans-serif;
   font-size: 16px;
   line-height: 1.55;
   transition: color 180ms ease, background-color 180ms ease;
+}
+
+:root[data-theme="light"] body {
+  background: var(--bg);
+  animation: none;
+}
+
+@keyframes ambient-shift {
+  to {
+    background-position: 16% 10%, 82% 88%, center;
+  }
 }
 
 a {
@@ -337,7 +355,7 @@ button {
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(to bottom, var(--bg) 0, transparent 15%, transparent 82%, var(--bg) 100%),
+    linear-gradient(to bottom, var(--hero-blend) 0, transparent 15%, transparent 82%, var(--bg) 100%),
     linear-gradient(to right, rgba(5, 14, 27, 0.35), transparent 38%);
 }
 
@@ -625,7 +643,7 @@ button {
 
   .photo-vignette {
     background:
-      linear-gradient(to right, var(--bg) 0%, rgba(5, 14, 27, 0.74) 10%, transparent 36%),
+      linear-gradient(to right, var(--hero-blend) 0%, rgba(7, 20, 44, 0.75) 18%, transparent 45%),
       linear-gradient(to bottom, transparent 80%, var(--bg) 100%);
   }
 
@@ -697,6 +715,10 @@ button {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  body {
+    animation: none;
   }
 
   *,
