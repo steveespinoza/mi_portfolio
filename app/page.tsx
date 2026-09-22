@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import {
   BriefcaseBusiness,
   CakeSlice,
-  Cloud,
   Code2,
   Download,
   ExternalLink,
@@ -18,37 +17,36 @@ import {
   UserRound,
   X,
 } from "lucide-react";
-import {
-  SiDocker,
-  SiFastapi,
-  SiFlask,
-  SiGit,
-  SiLinux,
-  SiNextdotjs,
-  SiPostgresql,
-  SiPython,
-  SiReact,
-  SiSqlalchemy,
-  SiTailwindcss,
-} from "react-icons/si";
+import { Icon } from "@iconify/react";
+import reactLogo from "@iconify-icons/logos/react";
+import nextjsLogo from "@iconify-icons/logos/nextjs-icon";
+import tailwindLogo from "@iconify-icons/logos/tailwindcss-icon";
+import pythonLogo from "@iconify-icons/logos/python";
+import fastapiLogo from "@iconify-icons/logos/fastapi-icon";
+import postgresqlLogo from "@iconify-icons/logos/postgresql";
+import awsS3Logo from "@iconify-icons/logos/aws-s3";
+import gitLogo from "@iconify-icons/logos/git-icon";
+import powerBiLogo from "@iconify-icons/logos/microsoft-power-bi";
+import excelLogo from "@iconify-icons/vscode-icons/file-type-excel";
+import { SiFlask, SiSqlalchemy } from "react-icons/si";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import heroPhoto from "./hero.jpg";
 
 const links = ["Inicio", "Sobre mí", "Proyectos", "Experiencia", "Contacto"];
 
 const technologies = [
-  { name: "React", icon: SiReact, color: "#20d9f5" },
-  { name: "Next.js", icon: SiNextdotjs, color: "var(--text)" },
-  { name: "Tailwind CSS", icon: SiTailwindcss, color: "#32c7e8" },
-  { name: "Python", icon: SiPython, color: "#f5ce45" },
-  { name: "FastAPI", icon: SiFastapi, color: "#10b79d" },
-  { name: "Flask", icon: SiFlask, color: "var(--text)" },
-  { name: "PostgreSQL", icon: SiPostgresql, color: "#5c92d1" },
-  { name: "SQLAlchemy", icon: SiSqlalchemy, color: "#e31d2d" },
-  { name: "AWS S3", icon: Cloud, color: "#f59e0b" },
-  { name: "Git", icon: SiGit, color: "#f05236" },
-  { name: "Docker", icon: SiDocker, color: "#2aa9f0" },
-  { name: "Linux", icon: SiLinux, color: "#f2c94c" },
+  { name: "React", icon: reactLogo },
+  { name: "Next.js", icon: nextjsLogo },
+  { name: "Tailwind CSS", icon: tailwindLogo },
+  { name: "Python", icon: pythonLogo },
+  { name: "FastAPI", icon: fastapiLogo },
+  { name: "Flask", icon: null },
+  { name: "PostgreSQL", icon: postgresqlLogo },
+  { name: "SQLAlchemy", icon: null },
+  { name: "AWS S3", icon: awsS3Logo },
+  { name: "Git", icon: gitLogo },
+  { name: "Excel", icon: excelLogo },
+  { name: "Power BI", icon: powerBiLogo },
 ];
 
 function Brand() {
@@ -207,9 +205,15 @@ export default function Home() {
               <h2>Tecnologías</h2>
             </div>
             <div className="technology-grid">
-              {technologies.map(({ name, icon: Icon, color }) => (
+              {technologies.map(({ name, icon }) => (
                 <div className="technology-card" key={name}>
-                  <Icon className="technology-icon" style={{ color }} aria-hidden="true" />
+                  {icon ? (
+                    <Icon icon={icon} className="technology-icon" aria-hidden="true" />
+                  ) : name === "Flask" ? (
+                    <SiFlask className="technology-icon" style={{ color: "var(--text)" }} aria-hidden="true" />
+                  ) : (
+                    <SiSqlalchemy className="technology-icon" style={{ color: "#e31d2d" }} aria-hidden="true" />
+                  )}
                   <span>{name}</span>
                 </div>
               ))}

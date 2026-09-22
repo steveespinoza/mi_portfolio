@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@iconify-icons/logos": "^2.0.1",
+    "@iconify-icons/vscode-icons": "^2.0.7",
+    "@iconify/react": "^6.0.2",
     "lucide-react": "latest",
     "next": "latest",
     "react": "latest",
