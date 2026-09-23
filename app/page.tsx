@@ -32,9 +32,9 @@ import { SiFlask, SiSqlalchemy } from "react-icons/si";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import heroPhoto from "./hero.jpg";
 
-const links = ["Inicio", "Sobre mí", "Proyectos", "Experiencia", "Contacto"];
+const NAV_LINKS = ["Inicio", "Sobre mí", "Proyectos", "Experiencia", "Contacto"];
 
-const technologies = [
+const TECHNOLOGIES = [
   { name: "React", icon: reactLogo },
   { name: "Next.js", icon: nextjsLogo },
   { name: "Tailwind CSS", icon: tailwindLogo },
@@ -49,13 +49,20 @@ const technologies = [
   { name: "Power BI", icon: powerBiLogo },
 ];
 
+function slugify(value: string) {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/\s+/g, "-");
+}
+
 function Brand() {
   return (
     <a className="brand" href="#inicio" aria-label="Ir al inicio">
       <span className="brand-mark" aria-hidden="true">
-        <span>S</span>A
+        <span>S</span>E
       </span>
-      <span className="brand-name">Steve Alberto Espinoza</span>
     </a>
   );
 }
@@ -75,7 +82,7 @@ export default function Home() {
           <Brand />
 
           <nav className="desktop-nav" aria-label="Navegación principal">
-            {links.map((link, index) => (
+            {NAV_LINKS.map((link, index) => (
               <a className={index === 0 ? "active" : ""} href={`#${slugify(link)}`} key={link}>
                 {link}
               </a>
@@ -112,7 +119,7 @@ export default function Home() {
         </div>
 
         <nav id="mobile-menu" className={`mobile-nav ${menuOpen ? "open" : ""}`} aria-label="Navegación móvil">
-          {links.map((link) => (
+          {NAV_LINKS.map((link) => (
             <a href={`#${slugify(link)}`} key={link} onClick={() => setMenuOpen(false)}>
               {link}
             </a>
@@ -122,11 +129,12 @@ export default function Home() {
 
       <section className="hero" id="inicio">
         <div className="shell hero-grid">
+          
           <div className="hero-copy">
             <p className="eyebrow">Hola, soy</p>
             <h1>
-              Steve Alberto
-              <span>Espinoza Avila</span>
+              Steve
+              <span>Espinoza</span>
             </h1>
             <h2>Ingeniero en Informática y de Sistemas</h2>
             <p className="hero-description">
@@ -160,18 +168,20 @@ export default function Home() {
             <Image
               className="reference-crop"
               src={heroPhoto}
-              alt="Cachorro golden retriever"
+              alt="Fotografía de Steve Espinoza"
               fill
-              preload
-              sizes="(min-width: 900px) 58vw, 100vw"
+              priority 
+              sizes="(max-width: 900px) 100vw, 50vw"
             />
             <div className="photo-vignette" />
           </div>
+
         </div>
       </section>
 
       <section className="profile-section" id="sobre-mi">
         <div className="shell profile-grid">
+          
           <article className="about-block">
             <div className="section-title">
               <span className="title-icon"><UserRound size={19} /></span>
@@ -205,7 +215,7 @@ export default function Home() {
               <h2>Tecnologías</h2>
             </div>
             <div className="technology-grid">
-              {technologies.map(({ name, icon }) => (
+              {TECHNOLOGIES.map(({ name, icon }) => (
                 <div className="technology-card" key={name}>
                   {icon ? (
                     <Icon icon={icon} className="technology-icon" aria-hidden="true" />
@@ -219,6 +229,7 @@ export default function Home() {
               ))}
             </div>
           </article>
+
         </div>
       </section>
 
@@ -227,12 +238,4 @@ export default function Home() {
       </a>
     </main>
   );
-}
-
-function slugify(value: string) {
-  return value
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/\s+/g, "-");
 }

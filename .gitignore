@@ -32,3 +32,6 @@ pnpm-debug.log*
 Thumbs.db
 .idea/
 .vscode/
+
+exportar-proyecto.mjs
+proyecto.txt
