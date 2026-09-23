@@ -1,21 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   BriefcaseBusiness,
-  CakeSlice,
+  ChevronDown,
   Code2,
   Download,
   ExternalLink,
-  GraduationCap,
   Mail,
-  MapPin,
-  Menu,
   Moon,
   Sun,
-  UserRound,
-  X,
 } from "lucide-react";
 import { Icon } from "@iconify/react";
 import reactLogo from "@iconify-icons/logos/react";
@@ -32,7 +27,11 @@ import { SiFlask, SiSqlalchemy } from "react-icons/si";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import heroPhoto from "./hero.jpg";
 
-const NAV_LINKS = ["Inicio", "Sobre mí", "Proyectos", "Experiencia", "Contacto"];
+const NAV_LINKS = ["Inicio", "Tecnologías", "Proyectos", "Experiencia", "Contacto"];
+const MOBILE_NAV_LINKS = [
+  { label: "Inicio", id: "inicio" },
+  { label: "Tecnologías", id: "tecnologias" },
+];
 
 const TECHNOLOGIES = [
   { name: "React", icon: reactLogo },
@@ -69,11 +68,55 @@ function Brand() {
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("inicio");
   const [lightMode, setLightMode] = useState(false);
+  const mobileNavRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     document.documentElement.dataset.theme = lightMode ? "light" : "dark";
   }, [lightMode]);
+
+  useEffect(() => {
+    const updateActiveSection = () => {
+      const marker = window.scrollY + window.innerHeight * 0.5;
+      const visibleSection = MOBILE_NAV_LINKS.reduce((current, link) => {
+        const section = document.getElementById(link.id);
+        const top = section ? section.getBoundingClientRect().top + window.scrollY : Infinity;
+        return top <= marker ? link.id : current;
+      }, "inicio");
+
+      setActiveSection(visibleSection);
+    };
+
+    updateActiveSection();
+    window.addEventListener("scroll", updateActiveSection, { passive: true });
+    window.addEventListener("resize", updateActiveSection);
+
+    return () => {
+      window.removeEventListener("scroll", updateActiveSection);
+      window.removeEventListener("resize", updateActiveSection);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const closeOnOutsideClick = (event: PointerEvent) => {
+      if (!mobileNavRef.current?.contains(event.target as Node)) setMenuOpen(false);
+    };
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+
+    document.addEventListener("pointerdown", closeOnOutsideClick);
+    document.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.removeEventListener("pointerdown", closeOnOutsideClick);
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [menuOpen]);
+
+  const currentSectionLabel = MOBILE_NAV_LINKS.find((link) => link.id === activeSection)?.label ?? "Inicio";
 
   return (
     <main>
@@ -88,6 +131,37 @@ export default function Home() {
               </a>
             ))}
           </nav>
+
+          <div className="mobile-section-nav" ref={mobileNavRef}>
+            <button
+              className="mobile-section-trigger"
+              type="button"
+              aria-label={`Sección actual: ${currentSectionLabel}. ${menuOpen ? "Cerrar" : "Abrir"} navegación`}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-section-menu"
+              onClick={() => setMenuOpen((current) => !current)}
+            >
+              <span>{currentSectionLabel}</span>
+              <ChevronDown className={menuOpen ? "rotated" : ""} size={16} aria-hidden="true" />
+            </button>
+            {menuOpen && (
+              <nav id="mobile-section-menu" className="mobile-section-menu" aria-label="Ir a una sección">
+                {MOBILE_NAV_LINKS.map((link) => (
+                  <a
+                    href={`#${link.id}`}
+                    key={link.id}
+                    aria-current={activeSection === link.id ? "location" : undefined}
+                    onClick={() => {
+                      setActiveSection(link.id);
+                      setMenuOpen(false);
+                    }}
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </nav>
+            )}
+          </div>
 
           <div className="header-actions">
             <div className="theme-switch" aria-label="Selector de tema">
@@ -106,25 +180,8 @@ export default function Home() {
                 <Sun size={15} />
               </button>
             </div>
-            <button
-              className="menu-button"
-              aria-expanded={menuOpen}
-              aria-controls="mobile-menu"
-              aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
-              onClick={() => setMenuOpen((current) => !current)}
-            >
-              {menuOpen ? <X size={22} /> : <Menu size={22} />}
-            </button>
           </div>
         </div>
-
-        <nav id="mobile-menu" className={`mobile-nav ${menuOpen ? "open" : ""}`} aria-label="Navegación móvil">
-          {NAV_LINKS.map((link) => (
-            <a href={`#${slugify(link)}`} key={link} onClick={() => setMenuOpen(false)}>
-              {link}
-            </a>
-          ))}
-        </nav>
       </header>
 
       <section className="hero" id="inicio">
@@ -136,17 +193,19 @@ export default function Home() {
               Steve
               <span>Espinoza</span>
             </h1>
-            <h2>Ingeniero en Informática y de Sistemas</h2>
+            <h2>Egresado de Ingeniería en Informática y de Sistemas</h2>
             <p className="hero-description">
-              Apasionado por la tecnología, el desarrollo de software y la creación de soluciones que generen un
-              impacto real. Me gusta aprender, construir y mejorar constantemente.
+              Me interesa desarrollar software e integrar sistemas para el entorno empresarial. Me enfoco en
+              automatizar procesos y consolidar datos, aplicando análisis, resolución de problemas y buenas prácticas
+              de ingeniería para crear soluciones eficientes, seguras y confiables. Aprendo continuamente para generar
+              valor con tecnología.
             </p>
 
             <div className="hero-ctas">
               <a className="button button-primary" href="#proyectos">
                 <BriefcaseBusiness size={17} /> Ver proyectos
               </a>
-              <a className="button button-secondary" href="/cv-steve-espinoza.pdf" download>
+              <a className="button button-secondary" href="/CV_Steve_Espinoza_Avila.pdf" download="CV_Steve_Espinoza_Avila.pdf">
                 <Download size={17} /> Descargar CV
               </a>
             </div>
@@ -158,7 +217,7 @@ export default function Home() {
               <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
                 <FaLinkedinIn />
               </a>
-              <a href="mailto:steve@example.com" aria-label="Correo electrónico">
+              <a href="mailto:steve.espinoza@usil.pe" aria-label="Correo electrónico">
                 <Mail />
               </a>
             </div>
@@ -168,7 +227,7 @@ export default function Home() {
             <Image
               className="reference-crop"
               src={heroPhoto}
-              alt="Fotografía de Steve Espinoza"
+              alt="Un cachorro recostado mirando a la cámara"
               fill
               priority 
               sizes="(max-width: 900px) 100vw, 50vw"
@@ -179,37 +238,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="profile-section" id="sobre-mi">
-        <div className="shell profile-grid">
-          
-          <article className="about-block">
-            <div className="section-title">
-              <span className="title-icon"><UserRound size={19} /></span>
-              <h2>Sobre mí</h2>
-            </div>
-            <p>
-              Soy Ingeniero en Informática y de Sistemas, con experiencia en desarrollo de aplicaciones web, tanto en
-              el frontend como en el backend. Me enfoco en construir soluciones eficientes, escalables y fáciles de
-              mantener.
-            </p>
-
-            <div className="facts">
-              <div className="fact">
-                <CakeSlice />
-                <span><strong>26 años</strong><small>Edad</small></span>
-              </div>
-              <div className="fact">
-                <MapPin />
-                <span><strong>Perú</strong><small>Ubicación</small></span>
-              </div>
-              <div className="fact">
-                <GraduationCap />
-                <span><strong>Ingeniero</strong><small>Titulación</small></span>
-              </div>
-            </div>
-          </article>
-
-          <article className="technology-block" id="tecnologias">
+      <section className="technology-section" id="tecnologias">
+        <div className="shell">
+          <article className="technology-block">
             <div className="section-title">
               <span className="title-icon code-icon"><Code2 size={20} /></span>
               <h2>Tecnologías</h2>
