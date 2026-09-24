@@ -9,17 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@formatjs/intl-localematcher": "^0.9.0",
     "@iconify-icons/logos": "^2.0.1",
     "@iconify-icons/vscode-icons": "^2.0.7",
     "@iconify/react": "^6.0.2",
     "lucide-react": "latest",
+    "negotiator": "^1.1.0",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "react-icons": "latest"
+    "react-icons": "latest",
+    "server-only": "^0.0.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "latest",
+    "@types/negotiator": "^0.6.5",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",

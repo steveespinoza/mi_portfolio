@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "title": "Steve Alberto Espinoza | Software Engineer",
+    "description": "Portfolio of Steve Alberto Espinoza, Informatics and Systems Engineering Graduate."
+  },
+  "nav": {
+    "home": "Home",
+    "tech": "Technologies",
+    "projects": "Projects",
+    "experience": "Experience",
+    "contact": "Contact",
+    "close": "Close",
+    "open": "Open",
+    "currentSection": "Current section",
+    "themeDark": "Use dark theme",
+    "themeLight": "Use light theme",
+    "switchToEn": "Switch to English",
+    "switchToEs": "Switch to Spanish"
+  },
+  "hero": {
+    "eyebrow": "Hi, I'm",
+    "nameFirst": "Steve",
+    "nameLast": "Espinoza",
+    "subtitle": "Informatics and Systems Engineering Graduate",
+    "description": "I am interested in developing software and integrating systems for the business environment. I focus on automating processes and consolidating data, applying analysis, problem-solving, and good engineering practices to create efficient, secure, and reliable solutions. I learn continuously to generate value with technology.",
+    "ctaProjects": "View projects",
+    "ctaResume": "Download Resume",
+    "photoAlt": "A puppy lying down looking at the camera"
+  },
+  "tech": {
+    "title": "Technologies"
+  },
+  "projects": {
+    "title": "Projects",
+    "viewAll": "View all projects",
+    "items": {
+      "i-manager": {
+        "title": "i-Manager",
+        "badge": "ADMINISTRATION",
+        "description": "Condominium management system, with resident, payment, and reporting modules."
+      },
+      "kardex-erp": {
+        "title": "Kardex ERP",
+        "badge": "LOGISTICS",
+        "description": "Inventory control and kardex system for real estate companies."
+      },
+      "jym-asistencia": {
+        "title": "JYM_ASISTENCIA",
+        "badge": "HR",
+        "description": "Attendance control system for companies, with reports and user management."
+      }
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Have a project in mind or want to know more about my work? Let's talk!",
+    "form": {
+      "nameLabel": "Name",
+      "namePlaceholder": "Your full name",
+      "emailLabel": "Email",
+      "emailPlaceholder": "youremail@example.com",
+      "messageLabel": "Message",
+      "messagePlaceholder": "Tell me about your project...",
+      "submit": "Send message"
+    },
+    "quote": {
+      "part1": "A house is built by",
+      "highlight1": "wisdom",
+      "part2": "and becomes strong through",
+      "highlight2": "good sense",
+      "citation": "Proverbs 24:3",
+      "imgAlt": "Machu Picchu ruins in the fog"
+    }
+  },
+  "footer": {
+    "copyright": "Steve Espinoza. All rights reserved.",
+    "skipNext": "First stage of the portfolio"
+  }
+}

@@ -3,21 +3,27 @@
 
 import { useRef } from "react";
 import { PROJECTS } from "@/lib/data/projects";
-import { ProjectCard } from "./ProjectCard";
+import { ProjectCard, ProjectCombined } from "./ProjectCard";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-export function ProjectCarousel() {
+export function ProjectCarousel({ dict }: { dict: any }) {
   const carouselRef = useRef<HTMLDivElement>(null);
 
-  // Truco UX/Arquitectura: Duplicamos el arreglo para asegurar que haya desbordamiento
-  // y permitir el movimiento continuo tipo "bucle infinito".
-  const displayProjects = [...PROJECTS, ...PROJECTS];
+  // Unimos la base de datos estática con los textos traducidos del diccionario
+  const combinedProjects: ProjectCombined[] = PROJECTS.map((p) => ({
+    ...p,
+    title: dict.items[p.id].title,
+    badge: dict.items[p.id].badge,
+    description: dict.items[p.id].description,
+  }));
+
+  // Duplicamos para el efecto de carrusel continuo
+  const displayProjects = [...combinedProjects, ...combinedProjects];
 
   const scroll = (direction: "left" | "right") => {
     if (carouselRef.current) {
       const container = carouselRef.current;
       const { scrollLeft, scrollWidth, clientWidth } = container;
-      
       const scrollAmount = clientWidth / 2; 
 
       if (direction === "right") {
@@ -38,12 +44,6 @@ export function ProjectCarousel() {
 
   return (
     <div className="relative w-full group">
-      {/* 
-        Botón Izquierda: 
-        - flex: Siempre renderizado.
-        - left-1 md:left-[-1.25rem]: Ligeramente adentro en móvil, afuera en PC.
-        - opacity-100 md:opacity-0 md:group-hover:opacity-100: Siempre visible en móvil, fade-in en PC.
-      */}
       <button
         type="button"
         onClick={() => scroll("left")}
@@ -53,7 +53,6 @@ export function ProjectCarousel() {
         <ChevronLeft size={20} className="md:w-6 md:h-6" />
       </button>
 
-      {/* Contenedor del Carrusel */}
       <div
         ref={carouselRef}
         className="flex overflow-x-auto gap-4 lg:gap-6 pb-6 snap-x snap-mandatory 
@@ -69,10 +68,6 @@ export function ProjectCarousel() {
         ))}
       </div>
 
-      {/* 
-        Botón Derecha:
-        Misma lógica de visibilidad y posicionamiento dinámico.
-      */}
       <button
         type="button"
         onClick={() => scroll("right")}
