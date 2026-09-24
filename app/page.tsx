@@ -1,3 +1,4 @@
+// Ubicación: app/page.tsx
 "use client";
 
 import Image from "next/image";
@@ -11,6 +12,8 @@ import {
   Mail,
   Moon,
   Sun,
+  Folder,
+  ArrowRight
 } from "lucide-react";
 import { Icon } from "@iconify/react";
 import reactLogo from "@iconify-icons/logos/react";
@@ -26,11 +29,13 @@ import excelLogo from "@iconify-icons/vscode-icons/file-type-excel";
 import { SiFlask, SiSqlalchemy } from "react-icons/si";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import heroPhoto from "./hero.jpg";
+import { ProjectCarousel } from "@/components/ProjectCarousel";
 
 const NAV_LINKS = ["Inicio", "Tecnologías", "Proyectos", "Experiencia", "Contacto"];
 const MOBILE_NAV_LINKS = [
   { label: "Inicio", id: "inicio" },
   { label: "Tecnologías", id: "tecnologias" },
+  { label: "Proyectos", id: "proyectos" },
 ];
 
 const TECHNOLOGIES = [
@@ -260,6 +265,48 @@ export default function Home() {
               ))}
             </div>
           </article>
+        </div>
+      </section>
+
+      {/* =========================================
+          NUEVA SECCIÓN: PROYECTOS
+          ========================================= */}
+      <section className="py-12 md:py-16 border-b border-[var(--border)]" id="proyectos">
+        <div className="shell">
+          
+          {/* Cabecera de la Sección */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+            {/* Paso 4.1: Título e ícono de carpeta */}
+            <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-[#345cf2]/10 text-blue-500">
+                <Folder size={20} className="fill-current bg-blend-soft-light" />
+              </div>
+              <h2 className="m-0 font-[family-name:var(--font-retro)] text-2xl font-normal tracking-normal text-[var(--text)]">
+                Proyectos
+              </h2>
+            </div>
+
+            {/* Paso 4.2: Enlace "Ver todos" (Visible en tablet/desktop alineado a la derecha) */}
+            <a 
+              href="#todos-los-proyectos" 
+              className="hidden sm:flex items-center gap-2 text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors"
+            >
+              Ver todos los proyectos <ArrowRight size={16} />
+            </a>
+          </div>
+
+          {/* Paso 4.3: Inserción del Carrusel (La data ya está importada dentro del componente) */}
+          <ProjectCarousel />
+
+          {/* Enlace "Ver todos" (Visible solo en móvil centrado debajo del carrusel) */}
+          <div className="mt-4 flex justify-center sm:hidden">
+            <a 
+              href="#todos-los-proyectos" 
+              className="flex items-center gap-2 text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors"
+            >
+              Ver todos los proyectos <ArrowRight size={16} />
+            </a>
+          </div>
 
         </div>
       </section>
