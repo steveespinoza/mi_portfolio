@@ -86,6 +86,22 @@ button {
   cursor: pointer;
 }
 
+.contact-submit {
+  color: #fff;
+}
+
+.contact-quote-panel {
+  border: 1px solid transparent;
+  border-radius: 18px;
+}
+
+:root[data-theme="light"] .contact-quote-panel {
+  border-color: rgba(41, 61, 92, 0.12);
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 18px 48px rgba(35, 52, 84, 0.14);
+  backdrop-filter: blur(10px);
+}
+
 .shell {
   width: min(100% - 2rem, 1090px);
   margin-inline: auto;
@@ -523,6 +539,17 @@ button {
   font-weight: 600;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+@media (max-width: 359px) {
+  .technology-card {
+    gap: 0.5rem;
+    padding: 0.72rem;
+  }
+
+  .technology-card span {
+    font-size: 0.76rem;
+  }
 }
 
 .skip-next {

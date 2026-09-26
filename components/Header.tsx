@@ -1,8 +1,39 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { usePathname } from "next/navigation";
 import { ChevronDown, Moon, Sun } from "lucide-react";
+import type { Dictionary } from "@/dictionaries";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+
+type Theme = "dark" | "light";
+const THEME_CHANGE_EVENT = "portfolio-theme-change";
+
+function getThemeSnapshot(): Theme {
+  return document.documentElement.dataset.theme === "light" ? "light" : "dark";
+}
+
+function getServerThemeSnapshot(): Theme {
+  return "dark";
+}
+
+function subscribeToTheme(onStoreChange: () => void) {
+  const handleThemeChange = () => onStoreChange();
+  const handleStorage = (event: StorageEvent) => {
+    if (event.key !== "theme" || (event.newValue !== "dark" && event.newValue !== "light")) return;
+
+    document.documentElement.dataset.theme = event.newValue;
+    onStoreChange();
+  };
+
+  window.addEventListener(THEME_CHANGE_EVENT, handleThemeChange);
+  window.addEventListener("storage", handleStorage);
+
+  return () => {
+    window.removeEventListener(THEME_CHANGE_EVENT, handleThemeChange);
+    window.removeEventListener("storage", handleStorage);
+  };
+}
 
 function Brand() {
   return (
@@ -14,11 +45,32 @@ function Brand() {
   );
 }
 
-export function Header({ dict }: { dict: any }) {
+export function Header({ dict }: { dict: Dictionary["nav"] }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("inicio");
-  const [lightMode, setLightMode] = useState(false);
+  const theme = useSyncExternalStore(subscribeToTheme, getThemeSnapshot, getServerThemeSnapshot);
   const mobileNavRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+
+  useLayoutEffect(() => {
+    let persistedTheme: Theme;
+
+    try {
+      const storedTheme = localStorage.getItem("theme");
+      persistedTheme = storedTheme === "light" || storedTheme === "dark"
+        ? storedTheme
+        : window.matchMedia("(prefers-color-scheme: light)").matches
+          ? "light"
+          : "dark";
+    } catch {
+      persistedTheme = "dark";
+    }
+
+    if (document.documentElement.dataset.theme !== persistedTheme) {
+      document.documentElement.dataset.theme = persistedTheme;
+      window.dispatchEvent(new Event(THEME_CHANGE_EVENT));
+    }
+  }, [pathname]);
 
   const NAV_LINKS = [
     { label: dict.home, id: "inicio" },
@@ -28,16 +80,27 @@ export function Header({ dict }: { dict: any }) {
     { label: dict.contact, id: "contacto" },
   ];
 
-  const MOBILE_NAV_LINKS = [
-    { label: dict.home, id: "inicio" },
-    { label: dict.tech, id: "tecnologias" },
-    { label: dict.projects, id: "proyectos" },
-    { label: dict.contact, id: "contacto" },
-  ];
+  const MOBILE_NAV_LINKS = useMemo(
+    () => [
+      { label: dict.home, id: "inicio" },
+      { label: dict.tech, id: "tecnologias" },
+      { label: dict.projects, id: "proyectos" },
+      { label: dict.contact, id: "contacto" },
+    ],
+    [dict.contact, dict.home, dict.projects, dict.tech],
+  );
 
-  useEffect(() => {
-    document.documentElement.dataset.theme = lightMode ? "light" : "dark";
-  }, [lightMode]);
+  const updateTheme = (nextTheme: Theme) => {
+    document.documentElement.dataset.theme = nextTheme;
+
+    try {
+      localStorage.setItem("theme", nextTheme);
+    } catch {
+      // El tema sigue funcionando durante la sesión aunque el almacenamiento no esté disponible.
+    }
+
+    window.dispatchEvent(new Event(THEME_CHANGE_EVENT));
+  };
 
   useEffect(() => {
     const updateActiveSection = () => {
@@ -131,16 +194,18 @@ export function Header({ dict }: { dict: any }) {
 
           <div className="theme-switch" aria-label="Selector de tema">
             <button
-              className={!lightMode ? "selected" : ""}
+              className={theme === "dark" ? "selected" : ""}
               aria-label={dict.themeDark}
-              onClick={() => setLightMode(false)}
+              aria-pressed={theme === "dark"}
+              onClick={() => updateTheme("dark")}
             >
               <Moon size={15} />
             </button>
             <button
-              className={lightMode ? "selected" : ""}
+              className={theme === "light" ? "selected" : ""}
               aria-label={dict.themeLight}
-              onClick={() => setLightMode(true)}
+              aria-pressed={theme === "light"}
+              onClick={() => updateTheme("light")}
             >
               <Sun size={15} />
             </button>

@@ -15,3 +15,5 @@ export const getDictionary = async (locale: Locale) => {
   const loadDictionary = dictionaries[locale] ?? dictionaries.es;
   return loadDictionary();
 };
+
+export type Dictionary = Awaited<ReturnType<typeof getDictionary>>;

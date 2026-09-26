@@ -1,8 +1,9 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
+import type { Dictionary } from "@/dictionaries";
 
-export function LanguageSwitcher({ dict }: { dict: any }) {
+export function LanguageSwitcher({ dict }: { dict: Dictionary["nav"] }) {
   const pathname = usePathname();
   const router = useRouter();
 

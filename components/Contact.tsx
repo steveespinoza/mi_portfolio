@@ -3,8 +3,9 @@
 
 import { Mail, Send, Quote } from "lucide-react";
 import Image from "next/image";
+import type { Dictionary } from "@/dictionaries";
 
-export function Contact({ dict }: { dict: any }) {
+export function Contact({ dict }: { dict: Dictionary["contact"] }) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault(); 
     console.log("Formulario prevenido. Listo para integrar lógica de envío.");
@@ -98,7 +99,7 @@ export function Contact({ dict }: { dict: any }) {
 
                 <button
                   type="submit"
-                  className="mt-2 inline-flex items-center justify-center gap-2 w-full sm:w-auto lg:self-start min-h-[46px] px-6 py-2.5 rounded-lg text-white font-bold text-sm bg-gradient-to-br from-[#3e67f8] to-[#5a8aff] shadow-[0_12px_32px_rgba(56,91,236,0.24)] hover:-translate-y-1 transition-transform duration-160"
+                  className="contact-submit mt-2 inline-flex items-center justify-center gap-2 w-full sm:w-auto lg:self-start min-h-[46px] px-6 py-2.5 rounded-lg font-bold text-sm bg-gradient-to-br from-[#3e67f8] to-[#5a8aff] shadow-[0_12px_32px_rgba(56,91,236,0.24)] hover:-translate-y-1 transition-transform duration-160"
                 >
                   <Send size={16} />
                   {dict.form.submit}
@@ -116,7 +117,7 @@ export function Contact({ dict }: { dict: any }) {
                 fill 
                 className="object-cover object-center animate-slow-pan"
                 sizes="(max-width: 1024px) 100vw, 50vw"
-                priority
+                loading="lazy"
               />
               <div className="absolute inset-0 z-0 overflow-hidden">
                 <div className="absolute top-1/4 left-0 w-full h-32 bg-gradient-to-r from-transparent via-[var(--text)]/20 to-transparent animate-wind blur-xl"></div>
@@ -124,11 +125,11 @@ export function Contact({ dict }: { dict: any }) {
               </div>
             </div>
 
-            <div className="relative z-20 p-4 sm:p-6 lg:p-8 w-full max-w-lg flex flex-col items-center lg:items-start text-center lg:text-left gap-4">
+            <div className="contact-quote-panel relative z-20 p-4 sm:p-6 lg:p-8 w-full max-w-lg flex flex-col items-center lg:items-start text-center lg:text-left gap-4">
               <Quote size={40} className="text-[var(--accent)] mb-2 rotate-180 opacity-80" />
               <blockquote className="space-y-4">
                 <p className="text-2xl sm:text-3xl font-medium text-[var(--text)] leading-relaxed tracking-wide drop-shadow-md">
-                  "{dict.quote.part1} <span className="text-[var(--accent-light)] font-bold">{dict.quote.highlight1}</span> {dict.quote.part2} <span className="text-[var(--accent-light)] font-bold">{dict.quote.highlight2}</span>."
+                  &ldquo;{dict.quote.part1} <span className="text-[var(--accent-light)] font-bold">{dict.quote.highlight1}</span> {dict.quote.part2} <span className="text-[var(--accent-light)] font-bold">{dict.quote.highlight2}</span>.&rdquo;
                 </p>
                 <footer className="flex items-center justify-center lg:justify-start gap-3 text-[var(--muted)] font-bold text-sm sm:text-base tracking-widest uppercase mt-4">
                   <span className="w-10 h-[2px] bg-[var(--muted)] opacity-60"></span>

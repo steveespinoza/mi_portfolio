@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Exo_2, Racing_Sans_One } from "next/font/google";
+import Script from "next/script";
 import "@/app/globals.css";
 
 // Importamos nuestro sistema de diccionarios
@@ -17,6 +18,23 @@ const exo = Exo_2({
   variable: "--font-body",
   display: "swap",
 });
+
+const themeInitializer = `
+  (() => {
+    try {
+      const storedTheme = localStorage.getItem("theme");
+      const theme = storedTheme === "light" || storedTheme === "dark"
+        ? storedTheme
+        : window.matchMedia("(prefers-color-scheme: light)").matches
+          ? "light"
+          : "dark";
+
+      document.documentElement.dataset.theme = theme;
+    } catch {
+      document.documentElement.dataset.theme = "dark";
+    }
+  })();
+`;
 
 // ¡NUEVO! Función asíncrona para generar SEO dinámico
 export async function generateMetadata({
@@ -46,7 +64,12 @@ export default async function RootLayout({
 
   return (
     <html lang={lang} className={`${racingSans.variable} ${exo.variable}`} suppressHydrationWarning>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Script id="theme-initializer" strategy="beforeInteractive">
+          {themeInitializer}
+        </Script>
+      </body>
     </html>
   );
 }
