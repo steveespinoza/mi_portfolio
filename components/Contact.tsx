@@ -1,7 +1,7 @@
 // Ubicación: components/Contact.tsx
 "use client";
 
-import { Mail, Send, Quote } from "lucide-react";
+import { MessageCircleMore, Send, Quote } from "lucide-react";
 import Image from "next/image";
 import type { Dictionary } from "@/dictionaries";
 
@@ -20,21 +20,8 @@ export function Contact({ dict }: { dict: Dictionary["contact"] }) {
           50% { transform: scale(1.1) translate(-1.5%, 1.5%); }
           100% { transform: scale(1.05) translate(0, 0); }
         }
-        @keyframes windFlow {
-          0% { transform: translateX(-150%) skewX(-15deg); opacity: 0; }
-          20% { opacity: 0.15; }
-          80% { opacity: 0.15; }
-          100% { transform: translateX(250%) skewX(-15deg); opacity: 0; }
-        }
         .animate-slow-pan {
           animation: slowPan 35s ease-in-out infinite alternate;
-        }
-        .animate-wind {
-          animation: windFlow 8s linear infinite;
-        }
-        .animate-wind-delayed {
-          animation: windFlow 12s linear infinite;
-          animation-delay: 4s;
         }
         .image-mask {
           -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 85%);
@@ -48,8 +35,9 @@ export function Contact({ dict }: { dict: Dictionary["contact"] }) {
           {/* COLUMNA 1: Formulario de Contacto */}
           <div className="flex flex-col justify-center max-w-2xl mx-auto lg:mx-0 w-full relative z-20">
             <div className="flex flex-col items-center lg:items-start text-center lg:text-left gap-3 mb-8 md:mb-10">
-              <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-[#345cf2]/10 text-blue-500">
-                <Mail size={24} className="fill-current bg-blend-soft-light" aria-hidden="true" />
+              <div className="relative flex items-center justify-center w-12 h-12 rounded-2xl border border-blue-500/20 bg-gradient-to-br from-blue-500/20 to-cyan-400/5 text-blue-500 shadow-[0_12px_32px_rgba(52,92,242,0.18)]">
+                <MessageCircleMore size={25} strokeWidth={1.8} aria-hidden="true" />
+                <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full border-2 border-[var(--bg)] bg-cyan-400" aria-hidden="true" />
               </div>
               <h2 className="m-0 font-[family-name:var(--font-retro)] text-3xl font-normal tracking-normal text-[var(--text)]">
                 {dict.title}
@@ -110,19 +98,16 @@ export function Contact({ dict }: { dict: Dictionary["contact"] }) {
 
           {/* COLUMNA 2: Imagen Dinámica y Versículo */}
           <div className="relative w-full min-h-[450px] lg:h-full flex items-center justify-center pointer-events-none">
-            <div className="absolute inset-0 z-0 overflow-hidden image-mask opacity-80 dark:opacity-60 transition-opacity duration-300">
+            <div className="contact-visual-media absolute inset-0 z-0 overflow-hidden image-mask transition-opacity duration-300">
               <Image 
-                src="https://images.unsplash.com/photo-1509216242873-7786f446f465?q=80&w=1200&auto=format&fit=crop" 
+                src="/contact-network-landscape.png"
                 alt={dict.quote.imgAlt} 
                 fill 
                 className="object-cover object-center animate-slow-pan"
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 loading="lazy"
               />
-              <div className="absolute inset-0 z-0 overflow-hidden">
-                <div className="absolute top-1/4 left-0 w-full h-32 bg-gradient-to-r from-transparent via-[var(--text)]/20 to-transparent animate-wind blur-xl"></div>
-                <div className="absolute top-2/3 left-0 w-full h-48 bg-gradient-to-r from-transparent via-[var(--text)]/15 to-transparent animate-wind-delayed blur-2xl"></div>
-              </div>
+              <div className="contact-visual-tint absolute inset-0 z-10" />
             </div>
 
             <div className="contact-quote-panel relative z-20 p-4 sm:p-6 lg:p-8 w-full max-w-lg flex flex-col items-center lg:items-start text-center lg:text-left gap-4">
