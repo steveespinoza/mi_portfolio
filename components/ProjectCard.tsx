@@ -1,7 +1,7 @@
 // Ubicación: components/ProjectCard.tsx
 import Image from "next/image";
 import { ProjectBaseData } from "@/lib/data/projects";
-import { Icon } from "@iconify/react";
+import { Icon, type IconifyIcon } from "@iconify/react";
 import reactLogo from "@iconify-icons/logos/react";
 import nextjsLogo from "@iconify-icons/logos/nextjs-icon";
 import tailwindLogo from "@iconify-icons/logos/tailwindcss-icon";
@@ -20,9 +20,10 @@ export interface ProjectCombined extends ProjectBaseData {
 
 interface ProjectCardProps {
   project: ProjectCombined;
+  eagerImage?: boolean;
 }
 
-const iconifyMap: Record<string, any> = {
+const iconifyMap: Record<string, IconifyIcon> = {
   React: reactLogo,
   "Next.js": nextjsLogo,
   "Tailwind CSS": tailwindLogo,
@@ -32,7 +33,7 @@ const iconifyMap: Record<string, any> = {
   AWS: awsS3Logo,
 };
 
-export function ProjectCard({ project }: ProjectCardProps) {
+export function ProjectCard({ project, eagerImage = false }: ProjectCardProps) {
   return (
     <article className="flex flex-col bg-[var(--surface)] border border-[var(--border)] rounded-2xl overflow-hidden shadow-lg transition-transform duration-160 hover:-translate-y-1 hover:border-blue-500/30 group">
       <div className="relative w-full h-[200px] sm:h-[220px] bg-[#071222] overflow-hidden border-b border-[var(--border)]">
@@ -42,6 +43,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           fill
           className="object-cover object-center transition-transform duration-300 group-hover:scale-105"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          loading={eagerImage ? "eager" : "lazy"}
         />
         <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_30px_rgba(0,0,0,0.4)]" />
       </div>

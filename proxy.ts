@@ -3,19 +3,27 @@ import type { NextRequest } from "next/server";
 import { match as matchLocale } from "@formatjs/intl-localematcher";
 import Negotiator from "negotiator";
 
-export const locales = ["es", "en"];
+export const locales = ["es", "en"] as const;
 export const defaultLocale = "es";
 
-function getLocale(request: NextRequest): string | undefined {
-  // Convertimos los headers de la solicitud al formato que espera Negotiator
-  const negotiatorHeaders: Record<string, string> = {};
-  request.headers.forEach((value, key) => (negotiatorHeaders[key] = value));
+function getLocale(request: NextRequest): (typeof locales)[number] {
+  const acceptLanguage = request.headers.get("accept-language");
 
-  // Extraemos los idiomas preferidos por el navegador del usuario
-  const languages = new Negotiator({ headers: negotiatorHeaders }).languages();
+  if (!acceptLanguage) return defaultLocale;
 
-  // Comparamos los idiomas del usuario con los que soportamos
-  return matchLocale(languages, locales, defaultLocale);
+  try {
+    const languages = new Negotiator({
+      headers: { "accept-language": acceptLanguage },
+    })
+      .languages()
+      .filter((language) => language !== "*");
+
+    if (languages.length === 0) return defaultLocale;
+
+    return matchLocale(languages, [...locales], defaultLocale) as (typeof locales)[number];
+  } catch {
+    return defaultLocale;
+  }
 }
 
 // CAMBIO AQUÍ: Ahora la función se llama "proxy" en lugar de "middleware"

@@ -1,7 +1,9 @@
 // Ubicación: components/Footer.tsx
 "use client";
 
-export function Footer({ dict }: { dict: any }) {
+import type { Dictionary } from "@/dictionaries";
+
+export function Footer({ dict }: { dict: Dictionary["footer"] }) {
   const currentYear = new Date().getFullYear();
 
   return (

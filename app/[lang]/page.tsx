@@ -95,7 +95,7 @@ export default async function Home({
               src={heroPhoto}
               alt={dict.hero.photoAlt}
               fill
-              priority 
+              preload
               sizes="(max-width: 900px) 100vw, 50vw"
             />
             <div className="photo-vignette" />

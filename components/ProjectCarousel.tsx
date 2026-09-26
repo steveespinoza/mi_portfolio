@@ -5,8 +5,9 @@ import { useRef } from "react";
 import { PROJECTS } from "@/lib/data/projects";
 import { ProjectCard, ProjectCombined } from "./ProjectCard";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import type { Dictionary } from "@/dictionaries";
 
-export function ProjectCarousel({ dict }: { dict: any }) {
+export function ProjectCarousel({ dict }: { dict: Dictionary["projects"] }) {
   const carouselRef = useRef<HTMLDivElement>(null);
 
   // Unimos la base de datos estática con los textos traducidos del diccionario
@@ -63,7 +64,7 @@ export function ProjectCarousel({ dict }: { dict: any }) {
             key={`${project.id}-${index}`}
             className="snap-start shrink-0 w-full md:w-[calc(50%-8px)] lg:w-[calc(33.333%-16px)]"
           >
-            <ProjectCard project={project} />
+            <ProjectCard project={project} eagerImage={index === 0} />
           </div>
         ))}
       </div>

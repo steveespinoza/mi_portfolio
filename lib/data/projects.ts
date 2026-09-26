@@ -1,7 +1,9 @@
 // Ubicación: lib/data/projects.ts
 // Renombramos la interfaz para ser más precisos: ahora solo guarda datos base
+import type { Dictionary } from "@/dictionaries";
+
 export interface ProjectBaseData {
-  id: string;
+  id: keyof Dictionary["projects"]["items"];
   imageUrl: string;
   technologies: string[];
 }
