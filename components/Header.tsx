@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
 import { ChevronDown, Moon, Sun } from "lucide-react";
 import type { Dictionary } from "@/dictionaries";
@@ -52,7 +52,7 @@ export function Header({ dict }: { dict: Dictionary["nav"] }) {
   const mobileNavRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     let persistedTheme: Theme;
 
     try {
@@ -76,7 +76,6 @@ export function Header({ dict }: { dict: Dictionary["nav"] }) {
     { label: dict.home, id: "inicio" },
     { label: dict.tech, id: "tecnologias" },
     { label: dict.projects, id: "proyectos" },
-    { label: dict.experience, id: "experiencia" },
     { label: dict.contact, id: "contacto" },
   ];
 
@@ -150,8 +149,12 @@ export function Header({ dict }: { dict: Dictionary["nav"] }) {
         <Brand />
 
         <nav className="desktop-nav" aria-label="Navegación principal">
-          {NAV_LINKS.map((link, index) => (
-            <a className={index === 0 && activeSection === "inicio" ? "active" : ""} href={`#${link.id}`} key={link.id}>
+          {NAV_LINKS.map((link) => (
+            <a 
+              className={activeSection === link.id ? "active" : ""} 
+              href={`#${link.id}`} 
+              key={link.id}
+            >
               {link.label}
             </a>
           ))}
@@ -189,7 +192,6 @@ export function Header({ dict }: { dict: Dictionary["nav"] }) {
         </div>
 
         <div className="header-actions">
-          {/* Pasamos estrictamente la sección 'nav' del diccionario al Switcher */}
           <LanguageSwitcher dict={dict} />
 
           <div className="theme-switch" aria-label="Selector de tema">

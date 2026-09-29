@@ -7,7 +7,6 @@
     "home": "Home",
     "tech": "Technologies",
     "projects": "Projects",
-    "experience": "Experience",
     "contact": "Contact",
     "close": "Close",
     "open": "Open",
@@ -64,12 +63,12 @@
       "submit": "Send message"
     },
     "quote": {
-      "part1": "A house is built by",
-      "highlight1": "wisdom",
-      "part2": "and becomes strong through",
-      "highlight2": "good sense",
-      "citation": "Proverbs 24:3",
-      "imgAlt": "Digital topographic landscape with glowing blue connections"
+      "part1": "Exceptional software is built with",
+      "highlight1": "precision",
+      "part2": "and scales through",
+      "highlight2": "innovation",
+      "citation": "Systems Engineering",
+      "imgAlt": "Realistic landscape of towering mountains"
     }
   },
   "footer": {

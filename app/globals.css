@@ -167,7 +167,6 @@ button {
   font-weight: 900;
   font-style: italic;
   line-height: 1;
-  /* Reducido para separar la "S" y la "E" de manera elegante */
   letter-spacing: -0.08em; 
   color: var(--accent-light);
   filter: drop-shadow(0 4px 12px rgba(53, 88, 220, 0.25));
@@ -317,12 +316,11 @@ button {
   padding-block: 2rem 3rem;
 }
 
-/* Estado Base: Todo centrado (Cuando está apilado o en móviles) */
 .hero-grid {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center; /* Asegura el centrado global cuando hace wrap */
+  justify-content: center;
   gap: 2rem; 
   min-height: min(65vh, 600px);
 }
@@ -333,8 +331,8 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; /* Centra los hijos horizontalmente */
-  text-align: center; /* Fuerza el texto al centro */
+  align-items: center;
+  text-align: center;
   z-index: 2;
 }
 
@@ -377,7 +375,7 @@ button {
 .hero-ctas {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; /* Centra botones */
+  justify-content: center;
   gap: 0.75rem;
   margin-top: 1.4rem;
 }
@@ -418,7 +416,7 @@ button {
 
 .social-links {
   display: flex;
-  justify-content: center; /* Centra redes sociales */
+  justify-content: center;
   gap: 1rem;
   margin-top: 1.7rem;
 }
@@ -450,16 +448,16 @@ button {
   height: 23px;
 }
 
-/* FOTO ELÁSTICA */
+/* FOTO ELÁSTICA CON ENMASCARAMIENTO DE BORDES */
 .hero-photo {
   flex: 1 1 260px; 
   max-width: 100%;
   position: relative;
   height: clamp(300px, 40vw, 460px);
-  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 16px 40px var(--shadow);
-  background: #071222;
+  /* Máscara de opacidad radial para desvanecer los bordes suavemente */
+  -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 35%, rgba(0,0,0,0) 75%);
+  mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 35%, rgba(0,0,0,0) 75%);
 }
 
 .reference-crop {
@@ -468,18 +466,16 @@ button {
   filter: saturate(0.96) contrast(1.04);
 }
 
+/* La viñeta ya no necesita bordes duros ni sombras al estar enmascarada */
 .photo-vignette {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 20px;
+  background: radial-gradient(circle at center, transparent 40%, rgba(2, 8, 23, 0.25) 100%);
 }
 
 :root[data-theme="light"] .photo-vignette {
-  box-shadow: inset 0 0 40px rgba(255, 255, 255, 0.3);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  background: radial-gradient(circle at center, transparent 40%, rgba(246, 248, 252, 0.25) 100%);
 }
 
 /* =========================================
@@ -587,8 +583,6 @@ button {
   }
 }
 
-/* Punto exacto donde la foto y el texto se colocan lado a lado (664px)
-   Aquí devolvemos toda la alineación a la izquierda */
 @media (min-width: 681px) {
   .hero-grid {
     justify-content: space-between;
@@ -598,7 +592,7 @@ button {
     text-align: left;
   }
   .hero-description {
-    margin: 0.75rem 0 0; /* Resetea el margen automático para pegarlo a la izquierda */
+    margin: 0.75rem 0 0; 
   }
   .hero-ctas,
   .social-links {
@@ -639,7 +633,6 @@ button {
     font-size: 0.98rem;
   }
 
-  /* Desktop Nav */
   .desktop-nav {
     display: flex;
     align-self: stretch;
@@ -672,7 +665,6 @@ button {
     display: none;
   }
 
-  /* Typography Overrides */
   .hero h1 {
     font-size: clamp(4.25rem, 5.3vw, 5.4rem);
   }
@@ -698,7 +690,6 @@ button {
     margin-top: 1.5rem;
   }
 
-  /* Technologies */
   .technology-section {
     padding-block: 2.8rem 3.2rem;
   }

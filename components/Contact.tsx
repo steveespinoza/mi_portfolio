@@ -1,4 +1,3 @@
-// Ubicación: components/Contact.tsx
 "use client";
 
 import { MessageCircleMore, Send, Quote } from "lucide-react";
@@ -8,24 +7,16 @@ import type { Dictionary } from "@/dictionaries";
 export function Contact({ dict }: { dict: Dictionary["contact"] }) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault(); 
-    console.log("Formulario prevenido. Listo para integrar lógica de envío.");
+    console.log("Formulario prevenido. Listo para integrar lógica de envío (Server Action).");
   };
 
   return (
     <section className="py-12 md:py-16 border-b border-[var(--border)] overflow-hidden relative" id="contacto">
       <style dangerouslySetInnerHTML={{
         __html: `
-        @keyframes slowPan {
-          0% { transform: scale(1.05) translate(0, 0); }
-          50% { transform: scale(1.1) translate(-1.5%, 1.5%); }
-          100% { transform: scale(1.05) translate(0, 0); }
-        }
-        .animate-slow-pan {
-          animation: slowPan 35s ease-in-out infinite alternate;
-        }
         .image-mask {
-          -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 85%);
-          mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 85%);
+          -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 80%);
+          mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 80%);
         }
       `}} />
 
@@ -96,31 +87,35 @@ export function Contact({ dict }: { dict: Dictionary["contact"] }) {
             </div>
           </div>
 
-          {/* COLUMNA 2: Imagen Dinámica y Versículo */}
+          {/* COLUMNA 2: Imagen y Frase Encuadrada (Absolute Positioning) */}
           <div className="relative w-full min-h-[450px] lg:h-full flex items-center justify-center pointer-events-none">
-            <div className="contact-visual-media absolute inset-0 z-0 overflow-hidden image-mask transition-opacity duration-300">
+            <div className="contact-visual-media absolute inset-0 z-0 overflow-hidden image-mask">
               <Image 
-                src="/contact-network-landscape.png"
+                src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1200&auto=format&fit=crop"
                 alt={dict.quote.imgAlt} 
                 fill 
-                className="object-cover object-center animate-slow-pan"
+                className="object-cover object-center"
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 loading="lazy"
               />
               <div className="contact-visual-tint absolute inset-0 z-10" />
             </div>
 
-            <div className="contact-quote-panel relative z-20 p-4 sm:p-6 lg:p-8 w-full max-w-lg flex flex-col items-center lg:items-start text-center lg:text-left gap-4">
-              <Quote size={40} className="text-[var(--accent)] mb-2 rotate-180 opacity-80" />
-              <blockquote className="space-y-4">
+            {/* Contenedor centralizado y enmarcado con padding para no chocar con las comillas */}
+            <div className="contact-quote-panel relative z-20 w-full max-w-lg px-6 py-8 sm:px-10 sm:py-10 flex flex-col items-center justify-center">
+              
+              {/* Comilla de apertura: Anclada estrictamente a la esquina superior izquierda */}
+              <Quote size={45} className="text-[var(--accent)] rotate-180 opacity-50 absolute top-0 left-0" />
+              
+              <blockquote className="relative z-10 w-full text-center">
                 <p className="text-2xl sm:text-3xl font-medium text-[var(--text)] leading-relaxed tracking-wide drop-shadow-md">
-                  &ldquo;{dict.quote.part1} <span className="text-[var(--accent-light)] font-bold">{dict.quote.highlight1}</span> {dict.quote.part2} <span className="text-[var(--accent-light)] font-bold">{dict.quote.highlight2}</span>.&rdquo;
+                  {dict.quote.part1} <span className="text-[var(--accent-light)] font-bold">{dict.quote.highlight1}</span> {dict.quote.part2} <span className="text-[var(--accent-light)] font-bold">{dict.quote.highlight2}</span>.
                 </p>
-                <footer className="flex items-center justify-center lg:justify-start gap-3 text-[var(--muted)] font-bold text-sm sm:text-base tracking-widest uppercase mt-4">
-                  <span className="w-10 h-[2px] bg-[var(--muted)] opacity-60"></span>
-                  {dict.quote.citation}
-                </footer>
               </blockquote>
+
+              {/* Comilla de cierre: Anclada estrictamente a la esquina inferior derecha */}
+              <Quote size={45} className="text-[var(--accent)] opacity-50 absolute bottom-0 right-0" />
+              
             </div>
 
           </div>
