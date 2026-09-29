@@ -7,7 +7,6 @@
     "home": "Inicio",
     "tech": "Tecnologías",
     "projects": "Proyectos",
-    "experience": "Experiencia",
     "contact": "Contacto",
     "close": "Cerrar",
     "open": "Abrir",
@@ -64,12 +63,12 @@
       "submit": "Enviar mensaje"
     },
     "quote": {
-      "part1": "Una casa se edifica con",
-      "highlight1": "sabiduría",
-      "part2": "y se fortalece por medio del",
-      "highlight2": "buen juicio",
-      "citation": "Proverbios 24:3",
-      "imgAlt": "Paisaje topográfico digital con conexiones luminosas azules"
+      "part1": "El software excepcional se construye con",
+      "highlight1": "precisión",
+      "part2": "y escala mediante la",
+      "highlight2": "innovación",
+      "citation": "Ingeniería de Sistemas",
+      "imgAlt": "Paisaje realista de montañas imponentes"
     }
   },
   "footer": {

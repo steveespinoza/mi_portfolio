@@ -42,15 +42,11 @@ export default async function Home({
 }: {
   params: Promise<{ lang: string }>;
 }) {
-  // 1. Extraemos el idioma de la URL de forma asíncrona (Requisito de Next.js 15+)
   const { lang } = await params;
-  
-  // 2. Cargamos el diccionario desde el servidor
   const dict = await getDictionary(lang as Locale);
 
   return (
     <main>
-      {/* Pasamos estrictamente la sección "nav" del diccionario al Header */}
       <Header dict={dict.nav} />
 
       <section className="hero" id="inicio">
@@ -95,7 +91,7 @@ export default async function Home({
               src={heroPhoto}
               alt={dict.hero.photoAlt}
               fill
-              preload
+              priority={true}
               sizes="(max-width: 900px) 100vw, 50vw"
             />
             <div className="photo-vignette" />
