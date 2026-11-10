@@ -63,12 +63,19 @@ export default async function RootLayout({
   const { lang } = await params;
 
   return (
-    <html lang={lang} className={`${racingSans.variable} ${exo.variable}`} suppressHydrationWarning>
+    <html
+      lang={lang}
+      className={`${racingSans.variable} ${exo.variable}`}
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+    >
       <body>
         {children}
-        <Script id="theme-initializer" strategy="beforeInteractive">
-          {themeInitializer}
-        </Script>
+        <Script
+          id="theme-initializer"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: themeInitializer }}
+        />
       </body>
     </html>
   );

@@ -145,7 +145,7 @@ export default async function Home({
             </a>
           </div>
 
-          <ProjectCarousel dict={dict.projects} />
+          <ProjectCarousel dict={dict.projects} lang={lang as Locale} />
 
           <div className="mt-4 flex justify-center sm:hidden">
             <a 
