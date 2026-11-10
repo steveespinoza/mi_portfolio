@@ -32,7 +32,8 @@
   "projects": {
     "title": "Proyectos",
     "viewAll": "Ver todos los proyectos",
-    "viewCase": "Ver caso de estudio",
+    "detail": "Detalle",
+    "code": "Código",
     "items": {
       "i-manager": {
         "title": "i-Manager",
@@ -48,6 +49,11 @@
         "title": "Control de Asistencia",
         "badge": "RR.HH",
         "description": "Plataforma adaptable para registrar jornadas, validar marcaciones y generar reportes operativos."
+      },
+      "project-tracker": {
+        "title": "Seguimiento de Proyectos",
+        "badge": "OPERACIONES",
+        "description": "Sistema para asignar actividades, coordinar entregables y supervisar los plazos de un equipo de trabajo."
       }
     }
   },

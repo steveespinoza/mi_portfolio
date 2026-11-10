@@ -1,5 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Icon, type IconifyIcon } from "@iconify/react";
+import reactLogo from "@iconify-icons/logos/react";
+import webpackLogo from "@iconify-icons/logos/webpack";
+import flaskLogo from "@iconify-icons/logos/flask";
+import gunicornLogo from "@iconify-icons/logos/gunicorn";
+import postgresqlLogo from "@iconify-icons/logos/postgresql";
+import pythonLogo from "@iconify-icons/logos/python";
+import jwtLogo from "@iconify-icons/logos/jwt-icon";
+import awsS3Logo from "@iconify-icons/logos/aws-s3";
+import excelIcon from "@iconify-icons/vscode-icons/file-type-excel";
 import {
   ArrowLeft,
   ArrowRight,
@@ -7,12 +17,10 @@ import {
   Check,
   CheckCircle2,
   Clock3,
-  Database,
   FileSpreadsheet,
   Fingerprint,
   MapPin,
   Search,
-  ServerCog,
   Sparkles,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -55,10 +63,18 @@ const COPY = {
       reportTitle: "Entiende el resultado sin volver a preguntar qué pasó",
       reportBody: "Cada jornada reúne entrada, salida, estado y excepciones para que supervisión pueda revisar el detalle antes del cierre.",
       reportPoints: ["Historial por persona y jornada", "Tardanzas y tiempo adicional visibles", "Evidencia disponible para revisión", "Exportación sin perder el detalle"],
-      backendLabel: "Reglas consistentes",
-      backendTitle: "Una sola lógica para todas las sedes y pantallas",
-      backendBody: "La interfaz registra la acción; la API aplica permisos por rol y valida horarios y contexto; la base de datos conserva los eventos y S3 protege las evidencias.",
-      architecture: [["React", "Registra"], ["Flask", "Valida"], ["PostgreSQL", "Conserva"], ["AWS S3", "Protege"]],
+    },
+    technology: {
+      eyebrow: "Estructura técnica",
+      body: "Cada capa cumple una función concreta: registrar la jornada, validar las reglas, conservar los eventos y proteger las evidencias.",
+      items: [
+        ["React + Webpack", "Frontend", "Construye paneles, formularios y reportes; Create React App organiza el empaquetado y la entrega del cliente."],
+        ["Flask + Gunicorn", "API REST", "Expone módulos mediante blueprints y ejecuta la aplicación WSGI con un servidor preparado para producción."],
+        ["PostgreSQL + SQLAlchemy", "Datos", "Conserva marcaciones, horarios, sedes y roles; Alembic y Flask-Migrate versionan el esquema."],
+        ["JWT + Werkzeug", "Seguridad", "Flask-JWT-Extended protege las rutas y Werkzeug genera y verifica los hashes de contraseña."],
+        ["Amazon S3 + Pillow", "Evidencias", "Boto3 guarda imágenes privadas; Pillow valida, corrige y comprime cada evidencia a WebP."],
+        ["XlsxWriter + OpenPyXL", "Reportes", "XlsxWriter genera planillas de asistencia y OpenPyXL valida su estructura en las pruebas automatizadas."],
+      ],
     },
     ui: {
       dashboard: "Panel de asistencia", today: "Resumen de hoy", trend: "Tendencia semanal", recent: "Actividad reciente", checkin: "Registrar asistencia", employee: "Trabajador", schedule: "Jornada", location: "Ubicación validada", evidence: "Evidencia lista", confirm: "Confirmar entrada", report: "Reporte de jornadas", punctual: "Puntual", late: "Tardanza", overtime: "Tiempo adicional",
@@ -93,10 +109,18 @@ const COPY = {
       reportTitle: "Understand the result without asking what happened again",
       reportBody: "Each shift brings together check-in, check-out, status, and exceptions so supervisors can review the detail before closing.",
       reportPoints: ["History by person and shift", "Lateness and additional time visible", "Evidence available for review", "Export without losing detail"],
-      backendLabel: "Consistent rules",
-      backendTitle: "One source of logic for every location and screen",
-      backendBody: "The interface records the action; the API applies role-based permissions and validates schedules and context; the database preserves events, and S3 protects evidence.",
-      architecture: [["React", "Records"], ["Flask", "Validates"], ["PostgreSQL", "Preserves"], ["AWS S3", "Protects"]],
+    },
+    technology: {
+      eyebrow: "Technical structure",
+      body: "Each layer has a clear role: record shifts, validate rules, preserve events, and protect evidence.",
+      items: [
+        ["React + Webpack", "Frontend", "Builds dashboards, forms, and reports; Create React App handles client bundling and delivery."],
+        ["Flask + Gunicorn", "REST API", "Exposes modular blueprints and runs the WSGI application with a production-ready server."],
+        ["PostgreSQL + SQLAlchemy", "Data", "Stores attendance events, schedules, sites, and roles; Alembic and Flask-Migrate version the schema."],
+        ["JWT + Werkzeug", "Security", "Flask-JWT-Extended protects routes, while Werkzeug creates and verifies password hashes."],
+        ["Amazon S3 + Pillow", "Evidence", "Boto3 stores private images; Pillow validates, corrects, and compresses each file to WebP."],
+        ["XlsxWriter + OpenPyXL", "Reports", "XlsxWriter generates attendance workbooks and OpenPyXL validates their structure in automated tests."],
+      ],
     },
     ui: {
       dashboard: "Attendance dashboard", today: "Today’s summary", trend: "Weekly trend", recent: "Recent activity", checkin: "Record attendance", employee: "Employee", schedule: "Shift", location: "Location verified", evidence: "Evidence ready", confirm: "Confirm check-in", report: "Shift report", punctual: "On time", late: "Late", overtime: "Additional time",
@@ -104,8 +128,15 @@ const COPY = {
   },
 } as const;
 
-const ARCHITECTURE_ICONS: LucideIcon[] = [Fingerprint, ServerCog, Database, Camera];
 const WORKFLOW_ICONS: LucideIcon[] = [Search, Fingerprint, FileSpreadsheet];
+const TECHNOLOGY_ICONS: IconifyIcon[][] = [
+  [reactLogo, webpackLogo],
+  [flaskLogo, gunicornLogo],
+  [postgresqlLogo, pythonLogo],
+  [jwtLogo],
+  [awsS3Logo],
+  [excelIcon],
+];
 
 function DemoDashboard({ copy }: { copy: (typeof COPY)["es"] | (typeof COPY)["en"] }) {
   return (
@@ -194,9 +225,30 @@ export default async function AttendanceCaseStudy({ params }: PageProps) {
           </div>
           <div className={styles.showcaseRow}><div className={styles.showcaseCopy}><span className={styles.showcaseIndex}>{copy.product.captureLabel}</span><h3>{copy.product.captureTitle}</h3><p>{copy.product.captureBody}</p><ul>{copy.product.capturePoints.map((point) => <li key={point}><Check size={15} /> {point}</li>)}</ul></div><CheckInDemo copy={copy} /></div>
           <div className={`${styles.showcaseRow} ${styles.showcaseReverse}`}><div className={styles.showcaseCopy}><span className={styles.showcaseIndex}>{copy.product.reportLabel}</span><h3>{copy.product.reportTitle}</h3><p>{copy.product.reportBody}</p><ul>{copy.product.reportPoints.map((point) => <li key={point}><Check size={15} /> {point}</li>)}</ul></div><ReportDemo copy={copy} /></div>
-          <div className={styles.backendDecision}>
-            <div><span className={styles.eyebrow}>{copy.product.backendLabel}</span><h3>{copy.product.backendTitle}</h3><p>{copy.product.backendBody}</p></div>
-            <div className={styles.architectureFlow}>{copy.product.architecture.map(([title, description], index) => { const Icon = ARCHITECTURE_ICONS[index]; return <div className={styles.architectureNode} key={title}><div><Icon size={22} /></div><strong>{title}</strong><small>{description}</small>{index < copy.product.architecture.length - 1 && <ArrowRight size={18} />}</div>; })}</div>
+        </div>
+      </section>
+
+      <section className={`${styles.section} ${styles.technologySection}`}>
+        <div className="shell">
+          <div className={styles.technologyIntro}>
+            <span className={styles.eyebrow}>{copy.technology.eyebrow}</span>
+            <p>{copy.technology.body}</p>
+          </div>
+          <div className={styles.technologyGrid}>
+            {copy.technology.items.map(([technology, role, description], index) => {
+              const icons = TECHNOLOGY_ICONS[index];
+              return (
+                <article className={styles.technologyCard} key={technology}>
+                  <span className={styles.technologyIndex}>0{index + 1}</span>
+                  <div className={styles.technologyIcon} data-multiple={icons.length > 1}>
+                    {icons.map((icon, iconIndex) => <Icon icon={icon} key={iconIndex} aria-hidden="true" />)}
+                  </div>
+                  <small>{role}</small>
+                  <h3>{technology}</h3>
+                  <p>{description}</p>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>

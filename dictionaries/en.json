@@ -32,7 +32,8 @@
   "projects": {
     "title": "Projects",
     "viewAll": "View all projects",
-    "viewCase": "View case study",
+    "detail": "Details",
+    "code": "Code",
     "items": {
       "i-manager": {
         "title": "i-Manager",
@@ -48,6 +49,11 @@
         "title": "Attendance Management",
         "badge": "HR",
         "description": "An adaptable platform for recording shifts, validating check-ins, and creating operational reports."
+      },
+      "project-tracker": {
+        "title": "Project Tracking",
+        "badge": "OPERATIONS",
+        "description": "A system for assigning activities, coordinating deliverables, and overseeing a team's deadlines."
       }
     }
   },

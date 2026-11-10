@@ -1,5 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Icon, type IconifyIcon } from "@iconify/react";
+import reactLogo from "@iconify-icons/logos/react";
+import flaskLogo from "@iconify-icons/logos/flask";
+import postgresqlLogo from "@iconify-icons/logos/postgresql";
+import jwtLogo from "@iconify-icons/logos/jwt-icon";
+import gunicornLogo from "@iconify-icons/logos/gunicorn";
+import excelIcon from "@iconify-icons/vscode-icons/file-type-excel";
+import pdfIcon from "@iconify-icons/vscode-icons/file-type-pdf2";
 import {
   ArrowLeft,
   ArrowRight,
@@ -85,6 +93,18 @@ const COPY = {
       points: ["Urgencia calculada según la fecha requerida", "Estados visibles para quien solicita", "Revisión y ajuste antes de atender", "Documentos disponibles en PDF y Excel", "Permisos separados por rol y ubicación"],
       flow: ["Solicitud", "Prioridad", "Revisión", "Atención"],
     },
+    technology: {
+      eyebrow: "Estructura técnica",
+      body: "Seis tecnologías sostienen la interfaz, la API, los datos, la seguridad, los reportes y la ejecución.",
+      items: [
+        ["React", "Frontend", "Construye paneles, formularios y navegación para operar el inventario."],
+        ["Flask", "API REST", "Organiza los endpoints por módulos y procesa las reglas del negocio."],
+        ["PostgreSQL + psycopg2", "Datos", "Persiste el inventario y ejecuta transacciones mediante un pool de conexiones."],
+        ["JWT + bcrypt", "Seguridad", "Protege credenciales y limita el acceso según el rol y la sede."],
+        ["OpenPyXL + ReportLab", "Exportación", "Genera reportes operativos en archivos Excel y PDF."],
+        ["Gunicorn", "Ejecución", "Sirve la aplicación Flask con un servidor preparado para producción."],
+      ],
+    },
     requestDemo: {
       overline: "Bandeja de requerimientos",
       title: "Solicitudes de materiales",
@@ -152,6 +172,18 @@ const COPY = {
       points: ["Urgency calculated from the required date", "Statuses visible to the requester", "Review and adjustment before fulfillment", "Documents available in PDF and Excel", "Permissions separated by role and location"],
       flow: ["Request", "Priority", "Review", "Fulfillment"],
     },
+    technology: {
+      eyebrow: "Technical structure",
+      body: "Six technologies support the interface, API, data, security, reporting, and runtime.",
+      items: [
+        ["React", "Frontend", "Builds the dashboards, forms, and navigation used to operate inventory."],
+        ["Flask", "REST API", "Organizes modular endpoints and processes business rules."],
+        ["PostgreSQL + psycopg2", "Data", "Persists inventory and runs transactions through a connection pool."],
+        ["JWT + bcrypt", "Security", "Protects credentials and restricts access by role and location."],
+        ["OpenPyXL + ReportLab", "Exports", "Generates operational reports as Excel and PDF files."],
+        ["Gunicorn", "Runtime", "Serves the Flask application with a production-ready server."],
+      ],
+    },
     requestDemo: {
       overline: "Request inbox",
       title: "Material requests",
@@ -164,6 +196,14 @@ const COPY = {
 } as const;
 
 const STEP_ICONS: LucideIcon[] = [PackagePlus, Warehouse, FileSpreadsheet];
+const TECHNOLOGY_ICONS: IconifyIcon[][] = [
+  [reactLogo],
+  [flaskLogo],
+  [postgresqlLogo],
+  [jwtLogo],
+  [excelIcon, pdfIcon],
+  [gunicornLogo],
+];
 
 type Copy = (typeof COPY)["es"] | (typeof COPY)["en"];
 
@@ -265,6 +305,31 @@ export default async function InventoryKardexPage({ params }: PageProps) {
         <div className={`shell ${styles.requestLayout}`}>
           <div className={styles.requestCopy}><span className={styles.eyebrow}>{copy.requests.eyebrow}</span><p>{copy.requests.body}</p><div className={styles.requestFlow}>{copy.requests.flow.map((step, index) => <span key={step}>{step}{index < copy.requests.flow.length - 1 && <ArrowRight size={14} />}</span>)}</div><ul>{copy.requests.points.map((point) => <li key={point}><ClipboardCheck size={16} /> {point}</li>)}</ul></div>
           <RequestDemo copy={copy} />
+        </div>
+      </section>
+
+      <section className={`${styles.section} ${styles.technologySection}`}>
+        <div className="shell">
+          <div className={styles.technologyIntro}>
+            <span className={styles.eyebrow}>{copy.technology.eyebrow}</span>
+            <p>{copy.technology.body}</p>
+          </div>
+          <div className={styles.technologyGrid}>
+            {copy.technology.items.map(([technology, role, description], index) => {
+              const icons = TECHNOLOGY_ICONS[index];
+              return (
+                <article className={styles.technologyCard} key={technology}>
+                  <span className={styles.technologyIndex}>0{index + 1}</span>
+                  <div className={styles.technologyIcon} data-multiple={icons.length > 1}>
+                    {icons.map((icon, iconIndex) => <Icon icon={icon} key={iconIndex} aria-hidden="true" />)}
+                  </div>
+                  <small>{role}</small>
+                  <h3>{technology}</h3>
+                  <p>{description}</p>
+                </article>
+              );
+            })}
+          </div>
         </div>
       </section>
       <Footer dict={dict.footer} />
