@@ -32,21 +32,22 @@
   "projects": {
     "title": "Projects",
     "viewAll": "View all projects",
+    "viewCase": "View case study",
     "items": {
       "i-manager": {
         "title": "i-Manager",
         "badge": "ADMINISTRATION",
-        "description": "Condominium management system, with resident, payment, and reporting modules."
+        "description": "A platform for allocating expenses, issuing receipts, validating payments, and tracking building operations."
       },
       "kardex-erp": {
-        "title": "Kardex ERP",
+        "title": "Inventory Kardex",
         "badge": "LOGISTICS",
-        "description": "Inventory control and kardex system for real estate companies."
+        "description": "A platform for tracking stock, movements, costs, and material requests across multiple locations."
       },
       "jym-asistencia": {
-        "title": "JYM_ASISTENCIA",
+        "title": "Attendance Management",
         "badge": "HR",
-        "description": "Attendance control system for companies, with reports and user management."
+        "description": "An adaptable platform for recording shifts, validating check-ins, and creating operational reports."
       }
     }
   },

@@ -5,9 +5,9 @@ import { useRef } from "react";
 import { PROJECTS } from "@/lib/data/projects";
 import { ProjectCard, ProjectCombined } from "./ProjectCard";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import type { Dictionary } from "@/dictionaries";
+import type { Dictionary, Locale } from "@/dictionaries";
 
-export function ProjectCarousel({ dict }: { dict: Dictionary["projects"] }) {
+export function ProjectCarousel({ dict, lang }: { dict: Dictionary["projects"]; lang: Locale }) {
   const carouselRef = useRef<HTMLDivElement>(null);
 
   // Unimos la base de datos estática con los textos traducidos del diccionario
@@ -16,6 +16,8 @@ export function ProjectCarousel({ dict }: { dict: Dictionary["projects"] }) {
     title: dict.items[p.id].title,
     badge: dict.items[p.id].badge,
     description: dict.items[p.id].description,
+    href: p.caseStudySlug ? `/${lang}/projects/${p.caseStudySlug}` : undefined,
+    caseLabel: p.caseStudySlug ? dict.viewCase : undefined,
   }));
 
   // Duplicamos para el efecto de carrusel continuo

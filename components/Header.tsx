@@ -35,9 +35,9 @@ function subscribeToTheme(onStoreChange: () => void) {
   };
 }
 
-function Brand() {
+function Brand({ href }: { href: string }) {
   return (
-    <a className="brand" href="#inicio" aria-label="Ir al inicio">
+    <a className="brand" href={href} aria-label="Ir al inicio">
       <span className="brand-mark" aria-hidden="true">
         <span>S</span>E
       </span>
@@ -51,6 +51,10 @@ export function Header({ dict }: { dict: Dictionary["nav"] }) {
   const theme = useSyncExternalStore(subscribeToTheme, getThemeSnapshot, getServerThemeSnapshot);
   const mobileNavRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const currentLocale = pathname?.split("/")[1] || "es";
+  const isHomePage = pathname === `/${currentLocale}` || pathname === `/${currentLocale}/`;
+  const sectionHref = (id: string) => isHomePage ? `#${id}` : `/${currentLocale}#${id}`;
+  const displayedActiveSection = isHomePage ? activeSection : "proyectos";
 
   useEffect(() => {
     let persistedTheme: Theme;
@@ -102,6 +106,8 @@ export function Header({ dict }: { dict: Dictionary["nav"] }) {
   };
 
   useEffect(() => {
+    if (!isHomePage) return;
+
     const updateActiveSection = () => {
       const marker = window.scrollY + window.innerHeight * 0.5;
       const visibleSection = MOBILE_NAV_LINKS.reduce((current, link) => {
@@ -121,7 +127,7 @@ export function Header({ dict }: { dict: Dictionary["nav"] }) {
       window.removeEventListener("scroll", updateActiveSection);
       window.removeEventListener("resize", updateActiveSection);
     };
-  }, [MOBILE_NAV_LINKS]);
+  }, [MOBILE_NAV_LINKS, isHomePage]);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -141,18 +147,18 @@ export function Header({ dict }: { dict: Dictionary["nav"] }) {
     };
   }, [menuOpen]);
 
-  const currentSectionLabel = MOBILE_NAV_LINKS.find((link) => link.id === activeSection)?.label ?? dict.home;
+  const currentSectionLabel = MOBILE_NAV_LINKS.find((link) => link.id === displayedActiveSection)?.label ?? dict.home;
 
   return (
     <header className="site-header">
       <div className="shell header-inner">
-        <Brand />
+        <Brand href={sectionHref("inicio")} />
 
         <nav className="desktop-nav" aria-label="Navegación principal">
           {NAV_LINKS.map((link) => (
             <a 
-              className={activeSection === link.id ? "active" : ""} 
-              href={`#${link.id}`} 
+              className={displayedActiveSection === link.id ? "active" : ""}
+              href={sectionHref(link.id)}
               key={link.id}
             >
               {link.label}
@@ -176,9 +182,9 @@ export function Header({ dict }: { dict: Dictionary["nav"] }) {
             <nav id="mobile-section-menu" className="mobile-section-menu" aria-label="Ir a una sección">
               {MOBILE_NAV_LINKS.map((link) => (
                 <a
-                  href={`#${link.id}`}
+                  href={sectionHref(link.id)}
                   key={link.id}
-                  aria-current={activeSection === link.id ? "location" : undefined}
+                  aria-current={displayedActiveSection === link.id ? "location" : undefined}
                   onClick={() => {
                     setActiveSection(link.id);
                     setMenuOpen(false);
