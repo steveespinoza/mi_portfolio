@@ -11,7 +11,7 @@ import fastapiLogo from "@iconify-icons/logos/fastapi-icon";
 import postgresqlLogo from "@iconify-icons/logos/postgresql";
 import awsS3Logo from "@iconify-icons/logos/aws-s3";
 import { SiFlask } from "react-icons/si";
-import { ArrowUpRight, CheckCircle2 } from "lucide-react";
+import { ArrowUpRight, CheckCircle2, Code2 } from "lucide-react";
 
 // Creamos una nueva interfaz que combina la base de datos con los textos
 export interface ProjectCombined extends ProjectBaseData {
@@ -19,7 +19,8 @@ export interface ProjectCombined extends ProjectBaseData {
   badge: string;
   description: string;
   href?: string;
-  caseLabel?: string;
+  detailLabel?: string;
+  codeLabel?: string;
 }
 
 interface ProjectCardProps {
@@ -181,12 +182,67 @@ function PropertyManagementPreview() {
   );
 }
 
+function ArchitectureTrackingPreview() {
+  const columns = [
+    { color: "bg-slate-300", cards: ["Proyecto Lumina"] },
+    { color: "bg-[#df765d]", cards: ["Proyecto Apolo", "Proyecto Lumina"] },
+    { color: "bg-emerald-400", cards: ["Informe final"] },
+  ];
+
+  return (
+    <div className="absolute inset-0 flex bg-[#edf0f3] text-[#1f2937]" aria-hidden="true">
+      <div className="w-[18%] bg-[#18212e] p-3 sm:p-4">
+        <div className="grid h-6 w-6 place-items-center rounded-md bg-[#df765d] text-[7px] font-black text-white">ST</div>
+        <div className="mt-6 space-y-2.5">
+          {[68, 52, 61, 46].map((width, index) => (
+            <div className="flex items-center gap-2" key={width}>
+              <span className={`h-2.5 w-2.5 rounded-sm ${index === 0 ? "bg-[#df765d]" : "bg-slate-600"}`} />
+              <span className="h-1.5 rounded-full bg-slate-500/70" style={{ width: `${width}%` }} />
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="min-w-0 flex-1 p-3 sm:p-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="h-2 w-24 rounded-full bg-slate-300" />
+            <div className="mt-2 h-3 w-32 rounded-full bg-slate-700" />
+          </div>
+          <div className="h-7 w-7 rounded-full bg-[#fff0eb] ring-2 ring-white" />
+        </div>
+        <div className="mt-4 grid grid-cols-3 gap-2">
+          {columns.map((column, columnIndex) => (
+            <div className="rounded-lg bg-slate-200/70 p-1.5" key={columnIndex}>
+              <div className="mb-2 flex items-center justify-between">
+                <span className={`h-1.5 w-8 rounded-full ${column.color}`} />
+                <span className="grid h-4 w-4 place-items-center rounded bg-white text-[7px] font-bold">{column.cards.length}</span>
+              </div>
+              {column.cards.map((card, cardIndex) => (
+                <div className="mb-1.5 rounded-md border-l-2 border-[#df765d] bg-white p-2 shadow-sm last:mb-0" key={`${card}-${cardIndex}`}>
+                  <div className="h-1.5 w-9 rounded-full bg-[#fff0eb]" />
+                  <div className="mt-2 h-1.5 rounded-full bg-slate-500" style={{ width: `${78 - cardIndex * 12}%` }} />
+                  <div className="mt-2 flex items-center justify-between">
+                    <span className="h-1 w-8 rounded-full bg-slate-200" />
+                    <span className="h-4 w-4 rounded-full bg-[#df765d]" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function ProjectCard({ project, eagerImage = false }: ProjectCardProps) {
-  const card = (
-    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-lg transition-all duration-200 hover:-translate-y-1 hover:border-blue-500/30 hover:shadow-xl">
+  return (
+    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] shadow-lg transition-all duration-200 hover:border-blue-500/30 hover:shadow-xl">
       <div className="relative w-full h-[200px] sm:h-[220px] bg-[#071222] overflow-hidden border-b border-[var(--border)]">
         {project.id === "i-manager" ? (
           <PropertyManagementPreview />
+        ) : project.id === "project-tracker" ? (
+          <ArchitectureTrackingPreview />
         ) : project.id === "jym-asistencia" ? (
           <AttendancePreview />
         ) : project.id === "kardex-erp" ? (
@@ -238,25 +294,34 @@ export function ProjectCard({ project, eagerImage = false }: ProjectCardProps) {
           })}
         </div>
 
-        {project.href && project.caseLabel && (
-          <div className="flex items-center justify-between text-sm font-semibold text-blue-400">
-            <span>{project.caseLabel}</span>
-            <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden="true" />
-          </div>
-        )}
+        <div className="flex flex-wrap items-center gap-2">
+          {project.href && project.detailLabel && (
+            <Link
+              href={project.href}
+              className="inline-flex min-h-10 flex-1 items-center justify-center gap-2 rounded-lg bg-blue-600 px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+              aria-label={`${project.detailLabel}: ${project.title}`}
+            >
+              {project.detailLabel}
+              <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+            </Link>
+          )}
+          {project.codeUrl && project.codeLabel && (
+            <a
+              href={project.codeUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex min-h-10 flex-1 items-center justify-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--bg-deep)] px-3 py-2 text-sm font-semibold text-[var(--text)] transition-colors hover:border-blue-500/50 hover:text-blue-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+              aria-label={`${project.codeLabel}: ${project.title}`}
+            >
+              <Code2 className="h-4 w-4" aria-hidden="true" />
+              {project.codeLabel}
+            </a>
+          )}
+          {!project.href && !project.codeUrl && (
+            <span className="text-sm text-[var(--muted)]">—</span>
+          )}
+        </div>
       </div>
     </article>
-  );
-
-  if (!project.href) return card;
-
-  return (
-    <Link
-      href={project.href}
-      className="block h-full rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-blue-500"
-      aria-label={`${project.caseLabel}: ${project.title}`}
-    >
-      {card}
-    </Link>
   );
 }

@@ -11,7 +11,7 @@ export function Contact({ dict }: { dict: Dictionary["contact"] }) {
   };
 
   return (
-    <section className="py-12 md:py-16 border-b border-[var(--border)] overflow-hidden relative" id="contacto">
+    <section className="py-12 md:py-16 overflow-hidden relative" id="contacto">
       <style dangerouslySetInnerHTML={{
         __html: `
         .image-mask {

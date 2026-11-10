@@ -7,6 +7,7 @@ export interface ProjectBaseData {
   imageUrl: string;
   technologies: string[];
   caseStudySlug?: string;
+  codeUrl?: string;
 }
 
 export const PROJECTS: ProjectBaseData[] = [
@@ -15,17 +16,27 @@ export const PROJECTS: ProjectBaseData[] = [
     imageUrl: "/projects/vivo.png",
     technologies: ["React", "FastAPI", "PostgreSQL", "AWS"],
     caseStudySlug: "gestion-inmobiliaria",
+    codeUrl: "https://github.com/jymcode/JYM_VIVO",
   },
   {
     id: "kardex-erp",
     imageUrl: "/projects/kardex.png",
     technologies: ["React", "Flask", "PostgreSQL"],
     caseStudySlug: "kardex-inventario",
+    codeUrl: "https://github.com/jymcode/JYM_KARDEX",
   },
   {
     id: "jym-asistencia",
     imageUrl: "/projects/asistencia.png",
     technologies: ["React", "Flask", "PostgreSQL", "AWS"],
     caseStudySlug: "control-asistencia",
+    codeUrl: "https://github.com/jymcode/JYM_ASISTENCIA",
+  },
+  {
+    id: "project-tracker",
+    imageUrl: "/projects/seguimiento.png",
+    technologies: ["Next.js", "Tailwind CSS", "PostgreSQL", "AWS"],
+    caseStudySlug: "seguimiento-proyectos",
+    codeUrl: "https://github.com/jymcode/JYM_ToDo",
   }
 ];

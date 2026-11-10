@@ -125,7 +125,7 @@ export default async function Home({
         </div>
       </section>
 
-      <section className="py-12 md:py-16 border-b border-[var(--border)]" id="proyectos">
+      <section className="py-12 md:py-16" id="proyectos">
         <div className="shell">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
             <div className="flex items-center gap-3">

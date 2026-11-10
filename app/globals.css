@@ -385,7 +385,6 @@ button {
    HERO SECTION 
    ========================================= */
 .hero {
-  border-bottom: 1px solid var(--border);
   padding-block: 2rem 3rem;
 }
 
@@ -556,7 +555,6 @@ button {
    ========================================= */
 .technology-section {
   padding-block: 2.35rem 3.1rem;
-  border-bottom: 1px solid var(--border);
 }
 
 .section-title {
