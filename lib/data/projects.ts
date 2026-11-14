@@ -8,6 +8,7 @@ export interface ProjectBaseData {
   technologies: string[];
   caseStudySlug?: string;
   codeUrl?: string;
+  releaseUrl?: string;
 }
 
 export const PROJECTS: ProjectBaseData[] = [
@@ -24,6 +25,13 @@ export const PROJECTS: ProjectBaseData[] = [
     technologies: ["React", "Flask", "PostgreSQL"],
     caseStudySlug: "kardex-inventario",
     codeUrl: "https://github.com/jymcode/JYM_KARDEX",
+  },
+  {
+    id: "gestion-de-inventario",
+    imageUrl: "/projects/gestion-de-inventario.png",
+    technologies: ["React", "Flask", "PostgreSQL"],
+    codeUrl: "https://github.com/steveespinoza/GESTION-DE-INVENTARIO",
+    releaseUrl: "https://github.com/steveespinoza/GESTION-DE-INVENTARIO/releases/tag/v0.2.0",
   },
   {
     id: "jym-asistencia",
