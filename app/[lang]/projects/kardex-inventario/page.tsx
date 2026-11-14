@@ -45,7 +45,6 @@ const COPY = {
     eyebrow: "Gestión de inventario",
     subtitle: "Registra compras y consumos, consulta el stock de cada ubicación y traslada materiales sin perder su historial ni su costo.",
     summary: "El sistema responde tres preguntas antes de comprar o mover un material: qué hay, dónde está y cuánto vale.",
-    codeSample: "Gestión de Inventario es una implementación independiente que desarrollé para mostrar cómo resuelvo el stock por almacén, los movimientos y los permisos.",
     codeSampleLink: "Ver muestra de código",
     demoLabel: "Vista ilustrativa · datos de ejemplo",
     dashboard: {
@@ -126,7 +125,6 @@ const COPY = {
     eyebrow: "Inventory management",
     subtitle: "Record purchases and consumption, check stock at every location, and move materials without losing their history or cost.",
     summary: "The system answers three questions before a material is purchased or moved: what is available, where it is, and what it is worth.",
-    codeSample: "Inventory Management is an independent implementation I built to show how I handle warehouse stock, movements, and permissions.",
     codeSampleLink: "View code sample",
     demoLabel: "Illustrative view · sample data",
     dashboard: {
@@ -295,7 +293,6 @@ export default async function InventoryKardexPage({ params }: PageProps) {
               <span className={styles.eyebrow}>{copy.eyebrow}</span>
               <p className={styles.heroSubtitle}>{copy.subtitle}</p>
               <p className={styles.heroSummary}>{copy.summary}</p>
-              <p className={styles.heroSummary}>{copy.codeSample}</p>
               <a className="button button-secondary mt-3" href={KARDEX_CODE_SAMPLE_URL} target="_blank" rel="noreferrer">
                 {copy.codeSampleLink} <ArrowRight size={16} aria-hidden="true" />
               </a>
