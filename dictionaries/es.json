@@ -34,6 +34,7 @@
     "viewAll": "Ver todos los proyectos",
     "detail": "Detalle",
     "code": "Código",
+    "release": "Ver versión",
     "items": {
       "i-manager": {
         "title": "i-Manager",
@@ -44,6 +45,11 @@
         "title": "Kardex de Inventario",
         "badge": "LOGÍSTICA",
         "description": "Plataforma para controlar existencias, movimientos, costos y requerimientos en múltiples ubicaciones."
+      },
+      "gestion-de-inventario": {
+        "title": "Gestión de Inventario",
+        "badge": "PROYECTO PERSONAL",
+        "description": "Entradas, salidas y traslados con control de stock y permisos por almacén."
       },
       "jym-asistencia": {
         "title": "Control de Asistencia",

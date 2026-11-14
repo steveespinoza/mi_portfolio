@@ -21,6 +21,7 @@ export interface ProjectCombined extends ProjectBaseData {
   href?: string;
   detailLabel?: string;
   codeLabel?: string;
+  releaseLabel?: string;
 }
 
 interface ProjectCardProps {
@@ -317,7 +318,19 @@ export function ProjectCard({ project, eagerImage = false }: ProjectCardProps) {
               {project.codeLabel}
             </a>
           )}
-          {!project.href && !project.codeUrl && (
+          {project.releaseUrl && project.releaseLabel && (
+            <a
+              href={project.releaseUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex min-h-10 flex-1 items-center justify-center gap-2 rounded-lg bg-blue-600 px-3 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
+              aria-label={`${project.releaseLabel}: ${project.title}`}
+            >
+              {project.releaseLabel}
+              <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+            </a>
+          )}
+          {!project.href && !project.codeUrl && !project.releaseUrl && (
             <span className="text-sm text-[var(--muted)]">—</span>
           )}
         </div>

@@ -34,6 +34,7 @@
     "viewAll": "View all projects",
     "detail": "Details",
     "code": "Code",
+    "release": "View release",
     "items": {
       "i-manager": {
         "title": "i-Manager",
@@ -44,6 +45,11 @@
         "title": "Inventory Kardex",
         "badge": "LOGISTICS",
         "description": "A platform for tracking stock, movements, costs, and material requests across multiple locations."
+      },
+      "gestion-de-inventario": {
+        "title": "Inventory Management",
+        "badge": "PERSONAL PROJECT",
+        "description": "Receipts, issues, and transfers with stock control and warehouse permissions."
       },
       "jym-asistencia": {
         "title": "Attendance Management",
