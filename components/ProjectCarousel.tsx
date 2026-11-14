@@ -19,7 +19,6 @@ export function ProjectCarousel({ dict, lang }: { dict: Dictionary["projects"]; 
     href: p.caseStudySlug ? `/${lang}/projects/${p.caseStudySlug}` : undefined,
     detailLabel: p.caseStudySlug ? dict.detail : undefined,
     codeLabel: p.codeUrl ? dict.code : undefined,
-    releaseLabel: p.releaseUrl ? dict.release : undefined,
   }));
 
   // Duplicamos para el efecto de carrusel continuo

@@ -28,6 +28,7 @@ import type { LucideIcon } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { getDictionary, type Locale } from "@/dictionaries";
+import { KARDEX_CODE_SAMPLE_URL } from "@/lib/data/projects";
 import styles from "./page.module.css";
 
 type PageProps = {
@@ -44,6 +45,8 @@ const COPY = {
     eyebrow: "Gestión de inventario",
     subtitle: "Registra compras y consumos, consulta el stock de cada ubicación y traslada materiales sin perder su historial ni su costo.",
     summary: "El sistema responde tres preguntas antes de comprar o mover un material: qué hay, dónde está y cuánto vale.",
+    codeSample: "Gestión de Inventario es una implementación independiente que desarrollé para mostrar cómo resuelvo el stock por almacén, los movimientos y los permisos.",
+    codeSampleLink: "Ver muestra de código",
     demoLabel: "Vista ilustrativa · datos de ejemplo",
     dashboard: {
       overline: "Inventario consolidado",
@@ -123,6 +126,8 @@ const COPY = {
     eyebrow: "Inventory management",
     subtitle: "Record purchases and consumption, check stock at every location, and move materials without losing their history or cost.",
     summary: "The system answers three questions before a material is purchased or moved: what is available, where it is, and what it is worth.",
+    codeSample: "Inventory Management is an independent implementation I built to show how I handle warehouse stock, movements, and permissions.",
+    codeSampleLink: "View code sample",
     demoLabel: "Illustrative view · sample data",
     dashboard: {
       overline: "Consolidated inventory",
@@ -286,7 +291,15 @@ export default async function InventoryKardexPage({ params }: PageProps) {
         <div className={`shell ${styles.heroInner}`}>
           <Link className={styles.backLink} href={`/${locale}#proyectos`}><ArrowLeft size={16} /> {copy.back}</Link>
           <div className={styles.heroGrid}>
-            <div className={styles.heroCopy}><span className={styles.eyebrow}>{copy.eyebrow}</span><p className={styles.heroSubtitle}>{copy.subtitle}</p><p className={styles.heroSummary}>{copy.summary}</p></div>
+            <div className={styles.heroCopy}>
+              <span className={styles.eyebrow}>{copy.eyebrow}</span>
+              <p className={styles.heroSubtitle}>{copy.subtitle}</p>
+              <p className={styles.heroSummary}>{copy.summary}</p>
+              <p className={styles.heroSummary}>{copy.codeSample}</p>
+              <a className="button button-secondary mt-3" href={KARDEX_CODE_SAMPLE_URL} target="_blank" rel="noreferrer">
+                {copy.codeSampleLink} <ArrowRight size={16} aria-hidden="true" />
+              </a>
+            </div>
             <InventoryDashboard copy={copy} />
           </div>
         </div>
